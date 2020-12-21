@@ -1,4 +1,4 @@
-const { signupValidation } = require('../utility/validation');
+const { signupValidation, loginValidation } = require('../utility/validation');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -8,7 +8,7 @@ const signup = async (req, res) => {
   const {error} = signupValidation(req.body);
   if(error) return res.status(400).send({ error: error.details[0].message });
 
-  //Check if user exists
+  //Check if user exists with request email
   const user = await User.findOne({ email: req.body.email });
   if(user) return res.status(400).send({ error: 'Email already exists' });
 
@@ -32,6 +32,25 @@ const signup = async (req, res) => {
   }
 }
 
+const login = async (req, res) => {
+  // Validate request body
+  const {error} = loginValidation(req.body);
+  if(error) return res.status(400).send({ error: error.details[0].message });
+
+  // Check if user exists
+  const user = await User.findOne({ email: req.body.email });
+  if(!user) return res.status(400).send({ error: 'User does not exist' });
+
+  // Check if password is correct
+  const validPass = await bcrypt.compare(req.body.password, user.password);
+  if(!validPass) return res.status(401).send({ error: 'Incorrect password' });
+
+  // Create JWT
+  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+  res.header('auth-token', token).send(token);
+}
+
 module.exports = {
-  signup
+  signup,
+  login
 }
