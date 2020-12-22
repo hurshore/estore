@@ -6,8 +6,8 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  color: {
-    type: String,
+  colors: {
+    type: Array,
     required: true
   },
   price: {

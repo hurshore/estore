@@ -11,6 +11,16 @@ const uploadProduct = async (req, res) => {
   }
 }
 
+const getProducts = async(req, res) => {
+  try {
+    const products = await Product.find();
+    res.send(products);
+  } catch(err) {
+    res.status(500).send('Something went wrong');
+  }
+}
+
 module.exports = {
-  uploadProduct
+  uploadProduct,
+  getProducts
 }
