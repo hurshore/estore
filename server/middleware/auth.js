@@ -1,12 +1,14 @@
 const model = require("../models/Cart");
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
+  // Check if there is a token in the header
   const token = req.header('auth-token');
   if(!token) return res.status(401).send('Unauthorized');
   
   try {
-    const verified = jwt.decode(token, process.env.TOKEN_SECRET);
+    // Verify the token
+    const verified = await jwt.verify(token, process.env.TOKEN_SECRET);
     req.user = verified;
     next();
   } catch(err) {

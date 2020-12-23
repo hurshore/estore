@@ -59,4 +59,38 @@ const addToCart = async (req, res) => {
   }
 }
 
-module.exports = { addToCart }
+const deleteFromCart = async (req, res) => {
+  // Find the user's cart
+  const cart = await Cart.findOne({ user: req.user._id })
+  if(!cart) {
+    return res.status(400).send('You do not have a cart');
+  }
+
+  // Find product in cart
+  const productToDelete = cart.products.find(product => product._id === req.body.productId);
+  if(!productToDelete) return res.status(400).send('Product not found in cart');
+  const productQuantity = productToDelete.quantity;
+  const productPrice = productToDelete.price;
+
+  let newProducts;
+  if(productQuantity < req.body.quantity) {
+    return res.status(400).send('Not enough items in cart');
+  } else if(productQuantity === req.body.quantity) {
+    newProducts = cart.products.filter(product => product._id !== req.body.productId);
+  } else {
+    newProducts = cart.products.map(product => product._id !== req.body.productId ?
+      product : { ...product, quantity: product.quantity - req.body.quantity }  
+    )
+  }
+  
+  // Update the cart
+  await Cart.updateOne({ _id: cart._id }, {
+    quantity: cart.quantity - req.body.quantity,
+    total: cart.total - (productPrice * req.body.quantity),
+    products: newProducts
+  })
+  
+  res.send('Product deleted successfully');
+}
+
+module.exports = { addToCart, deleteFromCart }
