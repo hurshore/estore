@@ -1,8 +1,16 @@
 const Cart = require('../models/Cart');
 
+const getCart = async (req, res) => {
+  // Find the user's cart
+  const cart = await Cart.findOne({ user: req.user._id });
+  if(!cart) return res.send({});
+
+  res.send(cart);
+}
+
 const addToCart = async (req, res) => {
   // Check if user has an existing cart
-  const cart = await Cart.findOne({ user: req.body.user });
+  const cart = await Cart.findOne({ user: req.user._id });
   if(cart) {
     let newProducts;
     // Check if product already exists in the cart
@@ -37,7 +45,7 @@ const addToCart = async (req, res) => {
 
   // Create a new cart if there isn't an existing cart
   const newCart = new Cart({
-    user: req.body.user,
+    user: req.user._id,
     quantity: req.body.quantity,
     total: req.body.price * req.body.quantity,
     products: [
@@ -93,4 +101,4 @@ const deleteFromCart = async (req, res) => {
   res.send('Product deleted successfully');
 }
 
-module.exports = { addToCart, deleteFromCart }
+module.exports = { addToCart, deleteFromCart, getCart }

@@ -28,9 +28,11 @@ const signup = async (req, res) => {
   try {
     // Save new user to database
     const savedUser = await newUser.save()
-    res.send({ user: user._id });
+    // Create a JWT
+    const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
+    res.send({ user: newUser._id, token });
   } catch(err) {
-    res.status(500).send('Something went wrong');
+    res.status(500).send(err.message);
   }
 }
 
@@ -47,7 +49,7 @@ const login = async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if(!validPass) return res.status(401).send({ error: 'Incorrect password' });
 
-  // Create JWT
+  // Create a JWT
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   res.header('auth-token', token).send(token);
 }
