@@ -1,0 +1,32 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.navLinks {
+  display: flex;
+}
+
+.navLinks a {
+  margin: 0 .7rem;
+}
+
+.active {
+  color: #EB5125
+}
+
+.shortcut {
+  display: flex;
+}
+
+.shortcut div:nth-child(2) {
+  margin: 0 0 0 1.3rem;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    padding: 1rem 2rem;
+  }
+}
