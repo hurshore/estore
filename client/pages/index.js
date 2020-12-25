@@ -21,7 +21,7 @@ export default function Home() {
           <div className={classes.highlights}>
             <h1>Blast Past Fast.</h1>
             <h1>A14 Bionic chip.</h1>
-            <h1>5G Just Got Real</h1>
+            <h1>5G Just Got Real.</h1>
           </div>
           <div className={classes.details}>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc imperdiet, tortor a bibendum finibus, lorem velit finibus ipsum, ut efficitur nunc urna vitae mi. Nullam nunc eros, egestas eget sem ut, vehicula semper neque. Proin blandit, ipsum vel accumsan elementum, metus dui accumsan velit, at laoreet quam arcu at purus. Nam accumsan, ligula vel tempus bibendum.</p>
