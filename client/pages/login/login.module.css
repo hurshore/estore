@@ -1,0 +1,41 @@
+.login {
+  padding: 1rem;
+}
+
+.login .header {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.loginForm {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.formGroup label {
+  font-size: .9rem;
+  margin-bottom: .5rem;
+}
+
+.loginForm input {
+  background-color: #F7F8F9;
+  border: 1px solid #6FA7B9;
+  border-radius: .8rem;
+  width: 100%;
+  padding: .8rem;
+  margin: 0 0 1rem 0;
+}
+
+.submitBtn {
+  border-radius: .8rem;
+}
+
+.signup {
+  font-size: .9rem;
+  margin-top: .8rem;
+}
+
+.signup a {
+  color: #EB5125;
+}
