@@ -32,16 +32,6 @@
   min-width: 100%;
 }
 
-.discover {
-  background-color: #EB5125;
-  color: #FFF;
-  font-weight: 600;
-  width: 180px;
-  padding: .8rem;
-  border: none;
-  cursor: pointer;
-}
-
 .backText {
   position: fixed;
   top: 50%;
