@@ -1,13 +1,13 @@
-.login {
+.signup {
   padding: 1rem;
 }
 
-.login .header {
+.signup .header {
   text-align: center;
   margin: 1rem 0;
 }
 
-.loginForm {
+.signupForm {
   width: 100%;
   max-width: 500px;
   margin: auto;
@@ -22,7 +22,7 @@
   margin-bottom: .5rem;
 }
 
-.loginForm input {
+.signupForm input {
   background-color: #F7F8F9;
   border: 1px solid #6FA7B9;
   border-radius: .8rem;
@@ -30,16 +30,16 @@
   padding: .9rem;
 }
 
-.loginForm .submitBtn {
+.signupForm .submitBtn {
   border-radius: .8rem;
   padding: .9rem;
 }
 
-.signup {
+.login {
   font-size: .9rem;
   margin-top: .8rem;
 }
 
-.signup a {
+.login a {
   color: #EB5125;
 }
