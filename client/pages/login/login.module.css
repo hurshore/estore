@@ -43,3 +43,8 @@
 .signup a {
   color: #EB5125;
 }
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
