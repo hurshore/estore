@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports = async (req, res, next) => {
   // Check if there is a token in the header
   const token = req.header('auth-token');
-  if(!token) return res.status(401).send('Unauthorized');
+  if(!token) return res.status(401).json('Unauthorized');
   
   try {
     // Verify the token
@@ -12,6 +12,6 @@ module.exports = async (req, res, next) => {
     req.user = verified;
     next();
   } catch(err) {
-    res.status(400).send('Invalid token');
+    res.status(400).json('Invalid token');
   }
 }

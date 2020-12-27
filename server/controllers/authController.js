@@ -8,11 +8,11 @@ dotenv.config();
 const signup = async (req, res) => {
   // Validate request body
   const {error} = signupValidation(req.body);
-  if(error) return res.status(400).send({ error: error.details[0].message });
+  if(error) return res.status(400).json({ error: error.details[0].message });
 
   //Check if user exists with request email
   const user = await User.findOne({ email: req.body.email });
-  if(user) return res.status(400).send({ error: 'Email already exists' });
+  if(user) return res.status(400).json({ error: 'Email already exists' });
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
@@ -30,28 +30,28 @@ const signup = async (req, res) => {
     const savedUser = await newUser.save()
     // Create a JWT
     const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
-    res.send({ user: newUser._id, token });
+    res.json({ user: newUser._id, token });
   } catch(err) {
-    res.status(500).send(err.message);
+    res.status(500).json(err.message);
   }
 }
 
 const login = async (req, res) => {
   // Validate request body
   const {error} = loginValidation(req.body);
-  if(error) return res.status(400).send({ error: error.details[0].message });
+  if(error) return res.status(400).json({ error: error.details[0].message });
 
   // Check if user exists
   const user = await User.findOne({ email: req.body.email });
-  if(!user) return res.status(400).send({ error: 'User does not exist' });
+  if(!user) return res.status(400).json({ error: 'User does not exist' });
 
   // Check if password is correct
   const validPass = await bcrypt.compare(req.body.password, user.password);
-  if(!validPass) return res.status(401).send({ error: 'Incorrect password' });
+  if(!validPass) return res.status(401).json({ error: 'Incorrect password' });
 
   // Create a JWT
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  res.header('auth-token', token).send(token);
+  res.header('auth-token', token).json(token);
 }
 
 module.exports = {

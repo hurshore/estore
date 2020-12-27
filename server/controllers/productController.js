@@ -6,9 +6,9 @@ const uploadProduct = async (req, res) => {
 
   try {
     const savedProduct = await product.save();
-    res.send(savedProduct);
+    res.json(savedProduct);
   } catch(err) {
-    res.status(400).send('Bad Request');
+    res.status(400).json('Bad Request');
   }
 }
 
@@ -16,9 +16,9 @@ const uploadProduct = async (req, res) => {
 const getProducts = async(req, res) => {
   try {
     const products = await Product.find();
-    res.send(products);
+    res.json(products);
   } catch(err) {
-    res.status(500).send('Something went wrong');
+    res.status(500).json('Something went wrong');
   }
 }
 
@@ -26,9 +26,9 @@ const getProducts = async(req, res) => {
 const getProduct = async(req, res) => {
   try {
     const products = await Product.findOne({ _id: req.params.productId })
-    res.send(products);
+    res.json(products);
   } catch(err) {
-    res.status(500).send(err);
+    res.status(500).json(err);
   }
 }
 

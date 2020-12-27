@@ -6,6 +6,8 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const app = express();
+app.use(cors());
+app.use(express.json());
 dotenv.config();
 
 // Connect to the database
@@ -15,9 +17,6 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
     console.log('Server up and running');
   })
 });
-
-app.use(express.json());
-app.use(cors());
 
 // Route middleware
 app.use('/api/user', authRoutes);
