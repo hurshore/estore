@@ -30,7 +30,7 @@ const signup = async (req, res) => {
     const savedUser = await newUser.save()
     // Create a JWT
     const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
-    res.json({ user: newUser._id, token });
+    res.header('auth-token', token).json(token);
   } catch(err) {
     res.status(500).json(err.message);
   }
