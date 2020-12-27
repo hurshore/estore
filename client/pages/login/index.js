@@ -46,7 +46,7 @@ const login = () => {
           />
         </div>
         <Button type="submit" btnClassName={classes.submitBtn}>Log In</Button>
-        <p className={classes.signup}>Don't have an account yet? <Link href="signup"><a>Sign up</a></Link></p>
+        <p className={classes.signup}>Don't have an account yet? <Link href="/signup"><a>Sign up</a></Link></p>
       </form>
       
     </div>
