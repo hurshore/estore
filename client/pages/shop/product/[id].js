@@ -21,8 +21,29 @@ const product = ({ product }) => {
     }
   }
 
-  const addToCart = () => {
-    
+  const addToCart = async () => {
+    console.log('Adding to cart');
+    const productToAdd = {
+      productId: product._id,
+      productName: product.name,
+      price: product.price,
+      img: product.img,
+      quantity: productQuantity
+    }
+
+    try {
+      const res = await fetch('http://localhost:5000/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productToAdd)
+      })
+      const data = await res.json();
+      console.log(data);
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   return (

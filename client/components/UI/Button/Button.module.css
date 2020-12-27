@@ -6,4 +6,10 @@
   padding: .8rem;
   border: none;
   cursor: pointer;
+  position: relative;
+}
+
+.btn:disabled {
+  background-color: #6C757D;
+  cursor: not-allowed;
 }

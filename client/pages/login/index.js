@@ -3,6 +3,7 @@ import classes from './login.module.css';
 import Button from '../../components/UI/Button/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const login = () => {
   const [state, setState] = useState({
@@ -91,9 +92,18 @@ const login = () => {
           type="submit" 
           btnClassName={classes.submitBtn} 
           disabled={state.loading ? true : false}
-        >Log In</Button>
+        >
+          Log In
+          {
+            state.loading && (
+              <span className={classes.loader}>
+                <Spinner />
+              </span>
+            )
+          }
+        </Button>
+        <p className={classes.signup}>Don't have an account yet? <Link href="/signup"><a>Sign up</a></Link></p>
       </form>
-      <p className={classes.signup}>Don't have an account yet? <Link href="/signup"><a>Sign up</a></Link></p>
     </div>
   )
 }
