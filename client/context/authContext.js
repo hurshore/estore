@@ -6,7 +6,7 @@ const AuthDispatchContext = createContext();
 
 const initialState = {
   token: null,
-  user: null
+  userId: null
 }
 
 const reducer = (state, action) => {

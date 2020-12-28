@@ -63,58 +63,60 @@ const signup = () => {
 
   return (
     <div className={classes.signup}>
-      <h2 className={classes.header}>Signup</h2>
-      {
-        state.error && (<p className={classes.error}>{state.error}</p>)
-      }
-      <form onSubmit={signupHandler} className={classes.signupForm}>
-        <div className={classes.formGroup}>
-          <label>Full Name</label>
-          <input 
-            type="text" 
-            name="fname"
-            value={state.fname}
-            required
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <div className={classes.formGroup}>
-          <label>Email</label>
-          <input 
-            type="email" 
-            name="email"
-            value={state.email}
-            required
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <div className={classes.formGroup}>
-          <label>Password</label>
-          <input 
-            type="password" 
-            name="password"
-            value={state.password}
-            required
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <Button 
-          type="submit" 
-          btnClassName={classes.submitBtn}
-          disabled={state.loading ? true : false}
-        >
-          Sign up
-          {
-            state.loading && (
-              <span className={classes.loader}>
-                <Spinner />
-              </span>
-            )
-          }
-        </Button>
-          
-        <p className={classes.login}>Already have an account? <Link href="/login"><a>Log in</a></Link></p>
-      </form>
+      <div className={classes.container}>
+        <h2 className={classes.header}>Signup</h2>
+        {
+          state.error && (<p className={classes.error}>{state.error}</p>)
+        }
+        <form onSubmit={signupHandler} className={classes.signupForm}>
+          <div className={classes.formGroup}>
+            <label>Full Name</label>
+            <input 
+              type="text" 
+              name="fname"
+              value={state.fname}
+              required
+              onChange={inputChangeHandler}
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <label>Email</label>
+            <input 
+              type="email" 
+              name="email"
+              value={state.email}
+              required
+              onChange={inputChangeHandler}
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <label>Password</label>
+            <input 
+              type="password" 
+              name="password"
+              value={state.password}
+              required
+              onChange={inputChangeHandler}
+            />
+          </div>
+          <Button 
+            type="submit" 
+            btnClassName={classes.submitBtn}
+            disabled={state.loading ? true : false}
+          >
+            Sign up
+            {
+              state.loading && (
+                <span className={classes.loader}>
+                  <Spinner />
+                </span>
+              )
+            }
+          </Button>
+            
+          <p className={classes.login}>Already have an account? <Link href="/login"><a>Log in</a></Link></p>
+        </form>
+      </div>
     </div>
   )
 }

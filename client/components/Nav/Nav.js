@@ -5,8 +5,12 @@ import Badge from '../UI/Badge/Badge';
 import ActiveLink from './ActiveLink';
 import Link from 'next/link';
 import Image from 'next/image';
+// Context
+import { useAuth } from '../../context/authContext';
 
 const nav = () => {
+  const authState = useAuth();
+
   return (
     <nav className={classes.nav}>
       <div className={classes.logo}>
@@ -27,6 +31,13 @@ const nav = () => {
             <a>Shop</a>
           </ActiveLink>
         </li>
+        {!authState.token && (
+          <li>
+            <ActiveLink activeClassName={classes.active} href="/login">
+              <a>Login</a>
+            </ActiveLink>
+          </li>
+        )}
       </ul>
       <div className={classes.shortcut}>
         <div>

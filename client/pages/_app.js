@@ -1,13 +1,14 @@
 import '../styles/globals.css';
-import Nav from '../components/Nav/Nav';
+import Layout from '../components/Layout/Layout';
 import { AuthProvider } from '../context/authContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <AuthProvider>
-        <Nav />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </AuthProvider>
     </>
   )

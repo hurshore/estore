@@ -2,6 +2,11 @@
   padding: 1rem;
 }
 
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
 .signup .header {
   text-align: center;
   margin: 1rem 0;
@@ -9,8 +14,6 @@
 
 .signupForm {
   width: 100%;
-  max-width: 500px;
-  margin: auto;
 }
 
 .formGroup {
