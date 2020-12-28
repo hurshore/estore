@@ -10,6 +10,7 @@
 .products {
   display: flex;
   flex-wrap: wrap;
+  flex: 100%;
   justify-content: center;
   margin: auto;
 }

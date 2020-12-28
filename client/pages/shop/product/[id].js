@@ -2,9 +2,12 @@ import classes from './product.module.css';
 import Image from 'next/image';
 import Button from '../../../components/UI/Button/Button';
 import { useState } from 'react';
+import { useAuth, useDispatchAuth } from '../../../context/authContext';
 
 const product = ({ product }) => {
   const [productQuantity, setProductQuantity] = useState(1);
+  const authState = useAuth();
+  const dispatch = useDispatchAuth();
   const productStars = Math.round(product.starrating);
 
   const changeQuantityHandler = (event) => {
@@ -35,9 +38,10 @@ const product = ({ product }) => {
       const res = await fetch('http://localhost:5000/api/cart', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'auth-token': ''
         },
-        body: JSON.stringify(productToAdd)
+        body: JSON.stringify(productToAdd),
       })
       const data = await res.json();
       console.log(data);
