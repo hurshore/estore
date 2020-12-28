@@ -2,12 +2,11 @@ import classes from './product.module.css';
 import Image from 'next/image';
 import Button from '../../../components/UI/Button/Button';
 import { useState } from 'react';
-import { useAuth, useDispatchAuth } from '../../../context/authContext';
+import { useAuth } from '../../../context/authContext';
 
 const product = ({ product }) => {
   const [productQuantity, setProductQuantity] = useState(1);
   const authState = useAuth();
-  const dispatch = useDispatchAuth();
   const productStars = Math.round(product.starrating);
 
   const changeQuantityHandler = (event) => {
@@ -39,7 +38,7 @@ const product = ({ product }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token': ''
+          'auth-token': authState.token
         },
         body: JSON.stringify(productToAdd),
       })
@@ -89,7 +88,7 @@ const product = ({ product }) => {
         })}
         </p>
 
-        <Button btnClassName={classes.addBtn} click={addToCart}>Add to cart</Button>
+        <Button btnClassName={classes.addBtn} click={addToCart} disabled={productQuantity < 1 ? true : false}>Add to cart</Button>
       </div>
     </div>
   )
