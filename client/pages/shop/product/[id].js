@@ -14,12 +14,12 @@ const product = ({ product }) => {
   }
 
   const incrementQuantity = () => {
-    setProductQuantity(productQuantity + 1);
+    setProductQuantity(parseInt(productQuantity) + 1);
   }
 
   const decrementQuantity = () => {
     if(productQuantity > 1) {
-      setProductQuantity(productQuantity - 1);
+      setProductQuantity(parseInt(productQuantity) - 1);
     }
   }
 
