@@ -7,14 +7,20 @@ const CartDispatchContext = createContext();
 const initialState = {
   products: [],
   quantity: 0,
-  total: 0,
-  userId: null
+  total: 0
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_CART:
-      return { ...state, token: action.payload }
+      return { 
+        ...state, 
+        products: action.payload.products,
+        quantity: action.payload.quantity,
+        total: action.payload.total
+      }
+    case actionTypes.LOGOUT:
+      return initialState
     default:
       throw new Error(`Unknown action: ${action.type}`)
   }
@@ -31,5 +37,5 @@ export const CartProvider = ({ children }) => {
   )
 }
 
-export const useAuth = () => useContext(CartStateContext)
-export const useDispatchAuth = () => useContext(CartDispatchContext)
+export const useCart = () => useContext(CartStateContext)
+export const useDispatchCart = () => useContext(CartDispatchContext)

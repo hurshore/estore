@@ -5,16 +5,17 @@ const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
 
 const initialState = {
-  token: null,
-  userId: null
+  token: null
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_TOKEN:
       return { ...state, token: action.payload }
-    case actionTypes.SET_USER:
-      return { ...state, user: action.state }
+    case actionTypes.LOGOUT:
+      console.log('Logging out');
+      localStorage.removeItem('auth-token');
+      return initialState
     default:
       throw new Error(`Unknown action: ${action.type}`)
   }

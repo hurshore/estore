@@ -7,9 +7,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 // Context
 import { useAuth } from '../../context/authContext';
+import { useCart } from '../../context/cartContext';
 
 const nav = () => {
   const authState = useAuth();
+  const cartState = useCart();
 
   return (
     <nav className={classes.nav}>
@@ -31,12 +33,16 @@ const nav = () => {
             <a>Shop</a>
           </ActiveLink>
         </li>
-        {!authState.token && (
+        {!authState.token ? (
           <li>
             <ActiveLink activeClassName={classes.active} href="/login">
               <a>Login</a>
             </ActiveLink>
           </li>
+        ) : (
+          <Link href="/logout">
+            <a>Logout</a>
+          </Link>
         )}
       </ul>
       <div className={classes.shortcut}>
@@ -46,7 +52,7 @@ const nav = () => {
         <div>
           <Link href="/cart">
             <a>
-              <Badge badgeContent={4}>
+              <Badge badgeContent={cartState.quantity}>
                 <Image src="/shopping-cart.svg" alt="cart" width={20} height={20} />
               </Badge>
             </a>
