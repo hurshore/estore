@@ -15,9 +15,9 @@ const reducer = (state, action) => {
     case actionTypes.SET_CART:
       return { 
         ...state, 
-        products: action.payload.products,
-        quantity: action.payload.quantity,
-        total: action.payload.total
+        products: action.payload.products || [],
+        quantity: action.payload.quantity || 0,
+        total: action.payload.total || 0
       }
     case actionTypes.LOGOUT:
       return initialState

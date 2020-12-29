@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import Nav from '../Nav/Nav';
 import { useAuth, useDispatchAuth } from '../../context/authContext';
+import { useCart, useDispatchCart } from '../../context/cartContext';
 import * as actionTypes from '../../context/actionTypes';
 
 const layout = (props) => {
   const authState = useAuth();
   const dispatchAuth = useDispatchAuth();
+  const dispatchCart = useDispatchCart();
   const { token } = authState;
 
   useEffect(() => {
@@ -19,9 +21,21 @@ const layout = (props) => {
     }
   }, [token])
 
-  useEffect(() => {
+  useEffect(async () => {
     if(token) {
       // Get user's cart
+      const res = await fetch('http://localhost:5000/api/cart', {
+        headers: {
+          'auth-token': token
+        }
+      });
+      const data = await res.json();
+      console.log(data);
+
+      dispatchCart({
+        type: actionTypes.SET_CART,
+        payload: data
+      })
     }
   }, [token])
 
