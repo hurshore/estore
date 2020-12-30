@@ -36,6 +36,14 @@ const layout = (props) => {
         type: actionTypes.SET_CART,
         payload: data
       })
+    } else {
+      const cart = JSON.parse(localStorage.getItem('cart'));
+      if(cart) {
+        dispatchCart({
+          type: actionTypes.SET_CART,
+          payload: cart
+        })
+      }
     }
   }, [token])
 

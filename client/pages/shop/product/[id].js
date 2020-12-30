@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import classes from './product.module.css';
 import Image from 'next/image';
 import Button from '../../../components/UI/Button/Button';
-import { useState } from 'react';
 import { useAuth } from '../../../context/authContext';
+import { useDispatchCart } from '../../../context/cartContext';
+import * as actionTypes from '../../../context/actionTypes';
 
 const product = ({ product }) => {
   const [productQuantity, setProductQuantity] = useState(1);
   const authState = useAuth();
+  const dispatchCart = useDispatchCart();
   const productStars = Math.round(product.starrating);
 
   const changeQuantityHandler = (event) => {
@@ -33,20 +36,25 @@ const product = ({ product }) => {
       quantity: productQuantity
     }
 
-    try {
-      const res = await fetch('http://localhost:5000/api/cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': authState.token
-        },
-        body: JSON.stringify(productToAdd),
-      })
-      const data = await res.json();
-      console.log(data);
-    } catch(err) {
-      console.log(err);
-    }
+    dispatchCart({
+      type: actionTypes.ADD_TO_CART,
+      payload: productToAdd
+    });
+
+    // try {
+    //   const res = await fetch('http://localhost:5000/api/cart', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'auth-token': authState.token
+    //     },
+    //     body: JSON.stringify(productToAdd),
+    //   })
+    //   const data = await res.json();
+    //   console.log(data);
+    // } catch(err) {
+    //   console.log(err);
+    // }
   }
 
   return (
