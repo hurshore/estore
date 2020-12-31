@@ -33,14 +33,17 @@ const addToCart = async (req, res) => {
         }
       ]
     }
-    
-    const updatedCart = await Cart.updateOne({ _id: cart._id }, {
-      quantity: cart.quantity + req.body.quantity,
-      total: cart.total + (req.body.price * req.body.quantity),
-      products: newProducts
-    })
 
-    return res.json(req.body);
+    try {
+      const updatedCart = await Cart.updateOne({ _id: cart._id }, {
+        quantity: cart.quantity + req.body.quantity,
+        total: cart.total + (req.body.price * req.body.quantity),
+        products: newProducts
+      })
+      return res.json(req.body);
+    } catch(err) {
+      res.json(err);
+    }
   }
 
   // Create a new cart if there isn't an existing cart
@@ -57,6 +60,60 @@ const addToCart = async (req, res) => {
         quantity: req.body.quantity
       }
     ]
+  });
+
+  try {
+    const savedProduct = await newCart.save();
+    res.json(savedProduct);
+  } catch(err) {
+    res.status(500).json(err);
+  }
+}
+
+const batchAddToCart = async (req, res) => {
+  const cart = await Cart.findOne({ user: req.user._id });
+  if(cart) {
+    let newProducts = [...cart.products];
+
+    req.body.products.forEach(product => {
+      const index = newProducts.findIndex(p => p._id === product._id);
+      if(index > -1) {
+        newProducts = newProducts.map(prod => {
+          return prod._id !== product._id ?
+          prod : { ...prod, quantity: prod.quantity + product.quantity }
+        })
+      } else {
+        newProducts = [
+          ...newProducts,
+          {
+            _id: product._id,
+            name: product.name,
+            price: product.price,
+            img: product.img,
+            quantity: product.quantity
+          }
+        ]
+      }
+    })
+
+    try {
+      await Cart.updateOne({ _id: cart._id }, {
+        quantity: cart.quantity + req.body.quantity,
+        total: cart.total + req.body.total,
+        products: newProducts
+      })
+      return res.json(req.body);
+    } catch(err) {
+      res.json(err);
+    }
+  }
+
+  // Create a new cart if there isn't an existing cart
+  const newCart = new Cart({
+    user: req.user._id,
+    quantity: req.body.quantity,
+    total: req.body.total,
+    products: req.body.products
   });
 
   try {
@@ -101,4 +158,4 @@ const deleteFromCart = async (req, res) => {
   res.json('Product deleted successfully');
 }
 
-module.exports = { addToCart, deleteFromCart, getCart }
+module.exports = { addToCart, batchAddToCart, deleteFromCart, getCart }
