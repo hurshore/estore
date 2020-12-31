@@ -23,20 +23,32 @@ const layout = (props) => {
 
   useEffect(async () => {
     if(token) {
+      console.log('Token found');
       // Get user's cart
-      const res = await fetch('http://localhost:5000/api/cart', {
-        headers: {
-          'auth-token': token
+      const cart = JSON.parse(localStorage.getItem('cart'));
+      if(cart) {
+        console.log('Cart in LS', cart);
+        // Add cart in local storage to the db
+        try {
+          const res = await fetch('http://localhost:5000/api/cart/batch', {
+            method: 'POST',
+            headers: {
+              'auth-token': token,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cart)
+          })
+          await res.json();
+          localStorage.removeItem('cart');
+          fetchCart();
+        } catch(err) {
+          console.log(err);
         }
-      });
-      const data = await res.json();
-      console.log(data);
-
-      dispatchCart({
-        type: actionTypes.SET_CART,
-        payload: data
-      })
+      } else {
+        fetchCart();
+      }
     } else {
+      // Get cart from local storage
       const cart = JSON.parse(localStorage.getItem('cart'));
       if(cart) {
         dispatchCart({
@@ -46,6 +58,23 @@ const layout = (props) => {
       }
     }
   }, [token])
+
+  const fetchCart = async () => {
+    console.log('Fetching cart');
+    const res = await fetch('http://localhost:5000/api/cart', {
+      headers: {
+        'auth-token': token,
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    console.log(data);
+
+    dispatchCart({
+      type: actionTypes.SET_CART,
+      payload: data
+    })
+  }
 
   return (
     <>

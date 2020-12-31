@@ -41,6 +41,25 @@ const product = ({ product }) => {
       payload: productToAdd
     });
 
+    try {
+      const res = await fetch('http://localhost:5000/api/cart/batch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': authState.token,
+          body: JSON.stringify({
+            products: [productToAdd],
+            total: productToAdd.total,
+            quantity: productToAdd.quantity
+          })
+        }
+      })
+      const data = await res.json();
+      console.log(data);
+    } catch(err) {
+      console.log(err)
+    }
+
     // try {
     //   const res = await fetch('http://localhost:5000/api/cart', {
     //     method: 'POST',
