@@ -78,3 +78,19 @@
     height: 30px;
   }
 }
+
+@media (min-width: 992px) {
+  .productContainer {
+    padding: 2rem;
+  }
+
+  /* .delete {
+    right: 2rem;
+    top: 2rem;
+  } */
+
+  /* .quantity {
+    right: 2rem;
+    bottom: 2rem;
+  } */
+}
