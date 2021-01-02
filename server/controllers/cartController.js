@@ -124,6 +124,7 @@ const batchAddToCart = async (req, res) => {
   }
 }
 
+// Reduce product quantity in cart;
 const deleteFromCart = async (req, res) => {
   // Find the user's cart
   const cart = await Cart.findOne({ user: req.user._id })
@@ -158,4 +159,28 @@ const deleteFromCart = async (req, res) => {
   res.json('Product deleted successfully');
 }
 
-module.exports = { addToCart, batchAddToCart, deleteFromCart, getCart }
+// Clear product from cart
+const clearFromCart = async (res, req) => {
+  const cart = await Cart.findOne({ user: req.user._id })
+  if(!cart) {
+    return res.status(400).json('You do not have a cart');
+  }
+
+  // Find product in cart
+  const productToDelete = cart.products.find(product => product._id === req.body.productId);
+  if(!productToDelete) return res.status(400).json('Product not found in cart');
+
+  let newProducts;
+  newProducts = cart.products.filter(product => product._id !== productToDelete._id);
+
+  // Update the cart
+  await Cart.updateOne({ _id: cart._id }, {
+    quantity: cart.quantity - productToDelete.quantity,
+    total: cart.total - (productToDelete.price * productToDelete.quantity),
+    products: newProducts
+  })
+  
+  res.json('Product cleared successfully');
+}
+
+module.exports = { addToCart, batchAddToCart, deleteFromCart, clearFromCart, getCart }
