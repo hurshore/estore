@@ -13,44 +13,47 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_CART:
+      console.log(action.payload);
       return { 
         ...state, 
-        products: action.payload.products || [],
-        quantity: action.payload.quantity || 0,
-        total: action.payload.total || 0
+        products: action.payload.cart.products || [],
+        quantity: action.payload.cart.quantity || 0,
+        total: action.payload.cart.total || 0
       }
     case actionTypes.ADD_TO_CART:
       let newProducts;
-      const index = state.products.findIndex(product => product._id === action.payload.productId);
+      const index = state.products.findIndex(product => product._id === action.payload.product.productId);
       if(index > -1) {
         // Increase product quantity in cart
-        newProducts = state.products.map(product => product._id !== action.payload.productId ?
-          product : { ...product, quantity: product.quantity + action.payload.quantity }
+        newProducts = state.products.map(product => product._id !== action.payload.product.productId ?
+          product : { ...product, quantity: product.quantity + action.payload.product.quantity }
         )
       } else {
         // Add a new product to the cart
         newProducts = [
           ...state.products,
           {
-            _id: action.payload.productId,
-            name: action.payload.productName,
-            price: action.payload.price,
-            img: action.payload.img,
-            quantity: action.payload.quantity
+            _id: action.payload.product.productId,
+            name: action.payload.product.productName,
+            price: action.payload.product.price,
+            img: action.payload.product.img,
+            quantity: action.payload.product.quantity
           }
         ]
       }
-      localStorage.setItem('cart', JSON.stringify({
-        ...state,
-        products: newProducts,
-        quantity: state.quantity + action.payload.quantity,
-        total: state.total + (action.payload.price * action.payload.quantity)
-      }))
+      if(!action.payload.auth) {
+        localStorage.setItem('cart', JSON.stringify({
+          ...state,
+          products: newProducts,
+          quantity: state.quantity + action.payload.product.quantity,
+          total: state.total + (action.payload.product.price * action.payload.product.quantity)
+        }))
+      }
       return {
         ...state,
         products: newProducts,
-        quantity: state.quantity + action.payload.quantity,
-        total: state.total + (action.payload.price * action.payload.quantity)
+        quantity: state.quantity + action.payload.product.quantity,
+        total: state.total + (action.payload.product.price * action.payload.product.quantity)
       }
     case actionTypes.LOGOUT:
       return initialState

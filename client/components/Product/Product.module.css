@@ -77,20 +77,22 @@
     width: 30px;
     height: 30px;
   }
-}
 
-@media (min-width: 992px) {
   .productContainer {
     padding: 2rem;
   }
 
-  /* .delete {
+  .delete {
     right: 2rem;
     top: 2rem;
-  } */
+  }
 
-  /* .quantity {
+  .quantity {
     right: 2rem;
     bottom: 2rem;
-  } */
+  }
+}
+
+@media (min-width: 992px) {
+
 }

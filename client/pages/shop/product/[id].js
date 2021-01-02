@@ -33,47 +33,37 @@ const product = ({ product }) => {
       productName: product.name,
       price: product.price,
       img: product.img,
-      quantity: productQuantity
+      quantity: productQuantity,
+      colors: product.colors
+    }
+
+    console.log(product.colors);
+
+    if(authState.token) {
+      try {
+        const res = await fetch('http://localhost:5000/api/cart', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authState.token
+          },
+          body: JSON.stringify(productToAdd),
+        })
+        const data = await res.json();
+        console.log(data);
+      } catch(err) {
+        console.log(err);
+      }
     }
 
     dispatchCart({
       type: actionTypes.ADD_TO_CART,
-      payload: productToAdd
+      payload: {
+        product: productToAdd,
+        auth: authState.token ? true : false
+      },
+      
     });
-
-    try {
-      const res = await fetch('http://localhost:5000/api/cart/batch', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': authState.token,
-          body: JSON.stringify({
-            products: [productToAdd],
-            total: productToAdd.total,
-            quantity: productToAdd.quantity
-          })
-        }
-      })
-      const data = await res.json();
-      console.log(data);
-    } catch(err) {
-      console.log(err)
-    }
-
-    // try {
-    //   const res = await fetch('http://localhost:5000/api/cart', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'auth-token': authState.token
-    //     },
-    //     body: JSON.stringify(productToAdd),
-    //   })
-    //   const data = await res.json();
-    //   console.log(data);
-    // } catch(err) {
-    //   console.log(err);
-    // }
   }
 
   return (

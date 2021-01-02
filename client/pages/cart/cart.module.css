@@ -1,5 +1,12 @@
 .cart {
   padding: 1rem;
+  max-width: 1440px;
+  margin: auto;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
 }
 
 .cart .row {
@@ -40,7 +47,21 @@
   font-size: 1.2rem;
 }
 
+@media (min-width: 600px) {
+  .summary {
+    padding: 2rem;
+  }
+}
+
 @media (min-width: 992px) {
+  .cart {
+    padding: 1rem 5%;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
   .productList, .summary {
     flex: 50%;
   }
@@ -51,5 +72,6 @@
 
   .summary {
     margin-top: 0;
+    padding: 2rem;
   }
 }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Nav from '../Nav/Nav';
 import { useAuth, useDispatchAuth } from '../../context/authContext';
-import { useCart, useDispatchCart } from '../../context/cartContext';
+import { useDispatchCart } from '../../context/cartContext';
 import * as actionTypes from '../../context/actionTypes';
 
 const layout = (props) => {
@@ -19,7 +19,7 @@ const layout = (props) => {
         payload: token
       })
     }
-  }, [token])
+  }, [token]);
 
   useEffect(async () => {
     if(token) {
@@ -53,7 +53,9 @@ const layout = (props) => {
       if(cart) {
         dispatchCart({
           type: actionTypes.SET_CART,
-          payload: cart
+          payload: {
+            cart
+          }
         })
       }
     }
@@ -72,7 +74,13 @@ const layout = (props) => {
 
     dispatchCart({
       type: actionTypes.SET_CART,
-      payload: data
+      payload: {
+        cart: {
+          products: data.products,
+          quantity: data.quantity,
+          total: data.total
+        }
+      }
     })
   }
 
