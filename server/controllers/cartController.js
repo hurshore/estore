@@ -160,7 +160,7 @@ const deleteFromCart = async (req, res) => {
 }
 
 // Clear product from cart
-const clearFromCart = async (res, req) => {
+const clearFromCart = async (req, res) => {
   const cart = await Cart.findOne({ user: req.user._id })
   if(!cart) {
     return res.status(400).json('You do not have a cart');
