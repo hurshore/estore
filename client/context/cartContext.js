@@ -3,6 +3,7 @@ import * as actionTypes from './actionTypes';
 
 const CartStateContext = createContext();
 const CartDispatchContext = createContext();
+let newProducts;
 
 const initialState = {
   products: [],
@@ -21,7 +22,8 @@ const reducer = (state, action) => {
         total: action.payload.cart.total || 0
       }
     case actionTypes.ADD_TO_CART:
-      let newProducts;
+      console.log('Adding product to context');
+      newProducts;
       const index = state.products.findIndex(product => product._id === action.payload.product.productId);
       if(index > -1) {
         // Increase product quantity in cart
@@ -56,6 +58,7 @@ const reducer = (state, action) => {
         total: state.total + (action.payload.product.price * action.payload.product.quantity)
       }
     case actionTypes.DELETE_FROM_CART:
+      console.log(action.payload);
       let freshProducts;
       const productToDelete = state.products.find(product => product._id === action.payload.productId);
       console.log(productToDelete);
@@ -68,12 +71,37 @@ const reducer = (state, action) => {
           product : { ...product, quantity: product.quantity - action.payload.quantity }
         )
       }
+      if(!action.payload.auth) {
+        localStorage.setItem('cart', JSON.stringify({
+          ...state,
+          products: freshProducts,
+          quantity: state.quantity - action.payload.quantity,
+          total: state.total - (productToDelete.price * action.payload.quantity)
+        }))
+      }
       return {
         ...state,
         products: freshProducts,
         quantity: state.quantity - action.payload.quantity,
         total: state.total - (productToDelete.price * action.payload.quantity)
       };
+    case actionTypes.CLEAR_FROM_CART:
+      newProducts = state.products.filter(product => product._id !== action.payload.productId);
+      const productToClear = state.products.find(product => product._id === action.payload.productId);
+      if(!action.payload.auth) {
+        localStorage.setItem('cart', JSON.stringify({
+            ...state,
+          products: newProducts,
+          quantity: state.quantity - productToClear.quantity,
+          total: state.total - (productToClear.quantity * productToClear.price)
+        }))
+      }
+      return {
+        ...state,
+        products: newProducts,
+        quantity: state.quantity - productToClear.quantity,
+        total: state.total - (productToClear.quantity * productToClear.price)
+      }
     case actionTypes.LOGOUT:
       return initialState
     default:

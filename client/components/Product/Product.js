@@ -12,6 +12,31 @@ const product = ({ product }) => {
   const authState = useAuth();
   const { token } = authState;
 
+  const clearItem = async () => {
+    if(token) {
+      try {
+        const res = await fetch('http://localhost:5000/api/cart/clear', {
+          method: 'DELETE',
+          headers: {
+            'auth-token': token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ productId: product._id })
+        })
+        const data = await res.json();
+        console.log(data);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    dispatchCart({
+      type: actionTypes.CLEAR_FROM_CART,
+      payload: {
+        productId: product._id
+      }
+    })
+  }
+
   const incrementQuantity = async () => {
     console.log('Adding product to database');
     const productToAdd = {
@@ -37,13 +62,13 @@ const product = ({ product }) => {
           throw res.clone.json();
         }
         const data = await res.json();
-        setPrevProductQuantity(productQuantity);
         console.log(data);
       } catch(err) {
         console.log(err);
       }
     }
 
+    setPrevProductQuantity(productQuantity);
     dispatchCart({
       type: actionTypes.ADD_TO_CART,
       payload: {
@@ -77,11 +102,13 @@ const product = ({ product }) => {
       }
     }
 
+    setPrevProductQuantity(productQuantity);
     dispatchCart({
       type: actionTypes.DELETE_FROM_CART,
       payload: {
         productId: product._id,
-        quantity: prevProductQuantity - productQuantity
+        quantity: prevProductQuantity - productQuantity,
+        auth: token ? true : false
       }
     })
   }
@@ -91,9 +118,17 @@ const product = ({ product }) => {
     let timeout;
     
     if(productQuantity > prevProductQuantity) {
-      timeout = setTimeout(() => incrementQuantity(), 2000);
+      if(!token) {
+        incrementQuantity()
+      } else {
+        timeout = setTimeout(() => incrementQuantity(), 2000);
+      }
     } else {
-      timeout = setTimeout(() => decrementQuantity(), 2000);
+      if(!token) {
+        decrementQuantity();
+      } else {
+        timeout = setTimeout(() => decrementQuantity(), 2000);
+      }
     }
 
     return () => {
@@ -116,7 +151,7 @@ const product = ({ product }) => {
         <h3 className={classes.price}>${product.price}</h3>
         <p className={classes.shipping}>Shipping: $0</p>
       </div>
-      <div className={classes.delete}>
+      <div className={classes.delete} onClick={clearItem}>
         <Image src="/delete.svg" alt="delete" width={20} height={20} />
       </div>
       <div className={classes.quantity}>
