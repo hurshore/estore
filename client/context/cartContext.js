@@ -55,6 +55,25 @@ const reducer = (state, action) => {
         quantity: state.quantity + action.payload.product.quantity,
         total: state.total + (action.payload.product.price * action.payload.product.quantity)
       }
+    case actionTypes.DELETE_FROM_CART:
+      let freshProducts;
+      const productToDelete = state.products.find(product => product._id === action.payload.productId);
+      console.log(productToDelete);
+      if(productToDelete.quantity < action.payload.quantity) throw new Error('Insufficent products');
+      
+      if(productToDelete.quantity === action.payload.quantity) {
+        freshProducts = state.products.filter(product => product._id !== action.payload.productId);
+      } else {
+        freshProducts = state.products.map(product => product._id !== action.payload.productId ?
+          product : { ...product, quantity: product.quantity - action.payload.quantity }
+        )
+      }
+      return {
+        ...state,
+        products: freshProducts,
+        quantity: state.quantity - action.payload.quantity,
+        total: state.total - (productToDelete.price * action.payload.quantity)
+      };
     case actionTypes.LOGOUT:
       return initialState
     default:

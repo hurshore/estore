@@ -4,14 +4,13 @@ import Image from 'next/image';
 import { useDispatchCart } from '../../context/cartContext';
 import { useAuth } from '../../context/authContext';
 import * as actionTypes from '../../context/actionTypes';
-import usePrevious from '../../hooks/usePrevious';
 
 const product = ({ product }) => {
   const [productQuantity, setProductQuantity] = useState(product.quantity);
   const [prevProductQuantity, setPrevProductQuantity] = useState(product.quantity);
   const dispatchCart = useDispatchCart();
-  const prevQuantity = usePrevious(productQuantity);
   const authState = useAuth();
+  const { token } = authState;
 
   const incrementQuantity = async () => {
     console.log('Adding product to database');
@@ -24,13 +23,13 @@ const product = ({ product }) => {
       colors: product.colors
     }
 
-    if(authState.token) {
+    if(token) {
       try {
         const res = await fetch('http://localhost:5000/api/cart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'auth-token': authState.token
+            'auth-token': token
           },
           body: JSON.stringify(productToAdd),
         })
@@ -49,13 +48,42 @@ const product = ({ product }) => {
       type: actionTypes.ADD_TO_CART,
       payload: {
         product: productToAdd,
-        auth: authState.token ? true : false
+        auth: token ? true : false
       }
     });
   }
 
-  const decrementQuantity = () => {
+  const decrementQuantity = async () => {
     console.log('Deleting product from database');
+    const productToDelete = {
+      productId: product._id,
+      quantity: prevProductQuantity - productQuantity
+    }
+    
+    if(token) {
+      try {
+        const res = await fetch('http://localhost:5000/api/cart', {
+          method: 'DELETE',
+          headers: {
+            'auth-token': token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(productToDelete)
+        })
+        const data = await res.json();
+        console.log(data);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    dispatchCart({
+      type: actionTypes.DELETE_FROM_CART,
+      payload: {
+        productId: product._id,
+        quantity: prevProductQuantity - productQuantity
+      }
+    })
   }
 
   useEffect(() => {
@@ -72,54 +100,6 @@ const product = ({ product }) => {
       clearTimeout(timeout);
     }
   }, [productQuantity])
-
-  // useEffect(() => {
-  //   const productToAdd = {
-  //     productId: product._id,
-  //     productName: product.name,
-  //     price: product.price,
-  //     img: product.img,
-  //     quantity: 1,
-  //     colors: product.colors
-  //   }
-  //   console.log('Product to add', productToAdd);
-
-  //   dispatchCart({
-  //     type: actionTypes.ADD_TO_CART,
-  //     payload: productToAdd,
-  //     auth: authState.token ? true : false
-  //   });
-
-  //   if(authState.token) {
-  //     setTimeout(async () => {
-  //       // console.log(count);
-  //       const body = { ...productToAdd, quantity: count };
-  //       console.log('body', body);
-
-  //       try {
-  //         const res = await fetch('http://localhost:5000/api/cart', {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             'auth-token': authState.token
-  //           },
-  //           body: JSON.stringify(body),
-  //         })
-  //         if(!res.ok) {
-  //           throw res.clone.json();
-  //         }
-  //         const data = await res.json(body);
-  //         // setCount(0);
-  //         console.log(data);
-  //       } catch(err) {
-  //         console.log(err);
-  //       }
-  //     }, 3000)
-  //   }
-  //   return () => {
-  //     // Clear timeout
-  //   }
-  // }, [count])
 
   return (
     <div key={product._id} className={classes.productContainer}>
