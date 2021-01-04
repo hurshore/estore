@@ -9,7 +9,7 @@ const shop = ({ products }) => {
       <h2 className={classes.header}>Products</h2>
       <div className={classes.products}>
         {
-          products.map(product => (
+          products && products.map(product => (
             <div className={classes.product} key={product._id}>
               <Image src={product.img} alt="product.name" width={250} height={300} />
               <div className={classes.productDetails}>

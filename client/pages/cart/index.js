@@ -1,12 +1,10 @@
-import { useState  } from 'react';
 import classes from './cart.module.css';
-import Image from 'next/image';
 import { useCart } from '../../context/cartContext';
 import Button from '../../components/UI/Button/Button';
 import Product from '../../components/Product/Product';
+import Link from 'next/link';
 
 const cart = () => {
-  const [productQuantity, setProductQuantity] = useState(1);
   const cartState = useCart();
 
   return (
@@ -41,7 +39,11 @@ const cart = () => {
                   <h3>${cartState.total}</h3>
                 </span>
               </div>
-              <Button btnClassName={classes.buyBtn}>BUY</Button>
+              <Link href="/checkout">
+                <a>
+                  <Button btnClassName={classes.buyBtn}>PROCEED TO CHECKOUT</Button>
+                </a>
+              </Link>
             </div>
           </div>
         </div>
