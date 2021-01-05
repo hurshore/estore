@@ -102,6 +102,7 @@ const reducer = (state, action) => {
         quantity: state.quantity - productToClear.quantity,
         total: state.total - (productToClear.quantity * productToClear.price)
       }
+    case actionTypes.RESET_CART:
     case actionTypes.LOGOUT:
       return initialState
     default:

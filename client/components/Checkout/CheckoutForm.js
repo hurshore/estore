@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useCart } from '../../context/cartContext';
+import { useCart, useDispatchCart } from '../../context/cartContext';
+import { useAuth } from '../../context/authContext';
 import classes from './CheckoutForm.module.css';
 import Link from 'next/link';
+import * as actionTypes from '../../context/actionTypes';
 
 const checkoutForm = () => {
   const [succeeded, setSucceeded] = useState(false);
@@ -13,6 +15,8 @@ const checkoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const cartState = useCart();
+  const dispatchCart = useDispatchCart();
+  const authState = useAuth();
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -48,12 +52,14 @@ const checkoutForm = () => {
       }
     }
   };
+
   const handleChange = async (event) => {
     // Listen for changes in the CardElement
     // and display any errors as the customer types their card details
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };
+
   const handleSubmit = async ev => {
     ev.preventDefault();
     setProcessing(true);
@@ -69,8 +75,25 @@ const checkoutForm = () => {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      try {
+        const res = await fetch('http://localhost:5000/api/cart/all', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authState.token
+          }
+        });
+        const data = await res.json();
+        console.log(data);
+        dispatchCart({
+          type: actionTypes.RESET_CART
+        })
+      } catch(err) {
+        console.log(err);
+      }
     }
   };
+
   return (
     <div className={classes.checkoutForm}>
       <div className={classes.paymentDetails}>
@@ -84,7 +107,6 @@ const checkoutForm = () => {
             <li>4000 0000 0000 9995 (will decline with a decline code of insufficient funds)</li>
           </ul>
         </div>
-       
       </div>
 
       <form id="payment-form" onSubmit={handleSubmit}>
