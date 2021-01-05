@@ -13,7 +13,7 @@ const createPaymentIntent = async (req, res) => {
   // Create a PaymentIntent with the order amount and currency
   const amount = await calculateOrderAmount(req.user._id);
   const paymentIntent = await stripe.paymentIntents.create({
-    amount,
+    amount: amount * 100,
     currency: "usd"
   });
   res.json({
