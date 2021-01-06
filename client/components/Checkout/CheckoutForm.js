@@ -4,6 +4,8 @@ import { useCart, useDispatchCart } from '../../context/cartContext';
 import { useAuth } from '../../context/authContext';
 import classes from './CheckoutForm.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Alert from '../UI/Alert/Alert';
 import * as actionTypes from '../../context/actionTypes';
 
 const checkoutForm = () => {
@@ -12,12 +14,14 @@ const checkoutForm = () => {
   const [processing, setProcessing] = useState('');
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
+  const [showTimer, setShowTimer] = useState(false);
+  const [timer, setTimer] = useState(5);
   const stripe = useStripe();
   const elements = useElements();
   const cartState = useCart();
   const dispatchCart = useDispatchCart();
   const authState = useAuth();
-
+  const router = useRouter();
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
@@ -34,6 +38,23 @@ const checkoutForm = () => {
         setClientSecret(data.clientSecret);
       });
   }, []);
+
+  useEffect(() => {
+    let timeout;
+    if(timer === 0) {
+      router.replace('/shop');
+      return;
+    }
+    if(showTimer) {
+      timeout = setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000)
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [showTimer, timer])
 
   const cardStyle = {
     style: {
@@ -61,6 +82,7 @@ const checkoutForm = () => {
   };
 
   const handleSubmit = async ev => {
+    // Display redirect timer
     ev.preventDefault();
     setProcessing(true);
     const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -88,6 +110,7 @@ const checkoutForm = () => {
         dispatchCart({
           type: actionTypes.RESET_CART
         })
+        setShowTimer(true);
       } catch(err) {
         console.log(err);
       }
@@ -96,6 +119,7 @@ const checkoutForm = () => {
 
   return (
     <div className={classes.checkoutForm}>
+      {showTimer && <Alert type="info">Redirecting in {timer}</Alert>}
       <div className={classes.paymentDetails}>
         <h3>Please enter your payment details:</h3>
         <div className={classes.cards}>

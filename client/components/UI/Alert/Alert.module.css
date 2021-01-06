@@ -1,0 +1,13 @@
+.alert {
+  z-index: 1;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem; 
+}
+
+.alertInfo {
+  color: #055160;
+  background-color: #cff4fc;
+  border-color: #b6effb;
+}
