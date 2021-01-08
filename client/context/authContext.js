@@ -5,17 +5,20 @@ const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
 
 const initialState = {
-  token: null
+  token: null,
+  authRedirectPath: '/shop'
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_TOKEN:
+      localStorage.setItem('auth-token', action.payload);
       return { ...state, token: action.payload }
     case actionTypes.LOGOUT:
-      console.log('Logging out');
       localStorage.removeItem('auth-token');
       return initialState
+    case actionTypes.SET_AUTH_REDIRECT_PATH:
+      return { ...state, authRedirectPath: action.path }
     default:
       throw new Error(`Unknown action: ${action.type}`)
   }
