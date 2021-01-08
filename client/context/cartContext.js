@@ -23,7 +23,6 @@ const reducer = (state, action) => {
       }
     case actionTypes.ADD_TO_CART:
       console.log('Adding product to context');
-      newProducts;
       const index = state.products.findIndex(product => product._id === action.payload.product.productId);
       if(index > -1) {
         // Increase product quantity in cart
@@ -39,7 +38,8 @@ const reducer = (state, action) => {
             name: action.payload.product.productName,
             price: action.payload.product.price,
             img: action.payload.product.img,
-            quantity: action.payload.product.quantity
+            quantity: action.payload.product.quantity,
+            colors: action.payload.product.colors
           }
         ]
       }
