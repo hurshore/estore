@@ -24,6 +24,7 @@ const checkoutForm = () => {
   const router = useRouter();
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
+    if(!authState.token) return;
     window
       .fetch("http://localhost:5000/api/payment/create-payment-intent", {
         headers: {
@@ -37,7 +38,7 @@ const checkoutForm = () => {
       .then(data => {
         setClientSecret(data.clientSecret);
       });
-  }, []);
+  }, [authState.token]);
 
   useEffect(() => {
     let timeout;
@@ -136,7 +137,7 @@ const checkoutForm = () => {
       <form id="payment-form" onSubmit={handleSubmit}>
         <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
         <button
-          disabled={processing || disabled || succeeded}
+          disabled={processing || disabled || succeeded || cartState.total === 0}
           id="submit"
         >
           <span id="button-text">
