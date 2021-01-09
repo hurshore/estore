@@ -2,7 +2,15 @@ const Product = require('../models/Product');
 
 // Upload a product to db
 const uploadProduct = async (req, res) => {
-  const product = new Product(req.body);
+  const product = new Product({
+    name: req.body.name,
+    colors: req.body.colors,
+    price: req.body.price,
+    description: req.body.description,
+    img: req.file.path,
+    brand: req.body.brand,
+    starrating: req.body.starrating
+  });
 
   try {
     const savedProduct = await product.save();
