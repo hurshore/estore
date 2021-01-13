@@ -11,7 +11,7 @@ const shop = ({ products }) => {
         {
           products && products.map(product => (
             <div className={classes.product} key={product._id}>
-              <Image src={product.img} alt="product.name" width={250} height={300} />
+              <Image src={product.img} alt="product.name" width={300} height={300} />
               <div className={classes.productDetails}>
                 <p className={classes.productName}>{product.name}</p>
                 <h3 className={classes.productPrice}>{`$${product.price}`}</h3>
