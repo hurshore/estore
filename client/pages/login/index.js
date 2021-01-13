@@ -4,7 +4,7 @@ import Button from '../../components/UI/Button/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import { useDispatchAuth } from '../../context/authContext';
+import { useAuth, useDispatchAuth } from '../../context/authContext';
 import * as actionTypes from '../../context/actionTypes';
 
 const login = () => {
@@ -15,6 +15,7 @@ const login = () => {
     loading: false
   })
 
+  const auth = useAuth();
   const dispatch = useDispatchAuth();
   const router = useRouter();
 
@@ -28,10 +29,7 @@ const login = () => {
 
   const loginHandler = async (event) => {
     event.preventDefault();
-    setState({
-      ...state,
-      loading: true
-    })
+    setState({ ...state, loading: true });
     const details = {
       email: state.email,
       password: state.password
@@ -55,10 +53,9 @@ const login = () => {
 
       const data = await res.json();
       console.log(data);
-      localStorage.setItem('auth-token', data);
       dispatch({ type: actionTypes.SET_TOKEN, payload: data })
       setState({ ...state, loading: false, error: null });
-      router.push('/shop');
+      router.push(auth.authRedirectPath);
     } catch(err) {
       console.log(err);
       setState({ ...state, loading: false, error: err.error });
