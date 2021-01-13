@@ -121,13 +121,13 @@ const product = ({ product }) => {
       if(!token) {
         incrementQuantity()
       } else {
-        timeout = setTimeout(() => incrementQuantity(), 2000);
+        timeout = setTimeout(() => incrementQuantity(), 1000);
       }
     } else {
       if(!token) {
         decrementQuantity();
       } else {
-        timeout = setTimeout(() => decrementQuantity(), 2000);
+        timeout = setTimeout(() => decrementQuantity(), 1000);
       }
     }
 
@@ -144,9 +144,11 @@ const product = ({ product }) => {
       <div className={classes.productDetails}>
         <h4>{product.name}</h4>
         <p className={classes.productColor}>
-          <span>Color: </span>
-          {/* {product.colors[0]} */}
-          Random Color
+          <span>Colors: </span>
+          {product.colors.map((color, index) => {
+            if(index + 1 < product.colors.length) return (<span key={color}>{color}, </span>);
+            return (<span key={color}>{color}</span>);
+          })}
         </p>
         <h3 className={classes.price}>${product.price}</h3>
         <p className={classes.shipping}>Shipping: $0</p>
