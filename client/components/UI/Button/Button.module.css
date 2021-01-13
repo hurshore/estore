@@ -10,6 +10,6 @@
 }
 
 .btn:disabled {
-  background-color: #6C757D;
-  cursor: not-allowed;
+  opacity: 0.5;
+  cursor: default;
 }
