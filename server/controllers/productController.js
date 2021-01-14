@@ -40,8 +40,43 @@ const getProduct = async(req, res) => {
   }
 }
 
+// Search for products
+const searchProducts = async(req, res) => {
+  try {
+    const data = await Product.aggregate([
+      {
+        $search: {
+          "text": {
+            "query": "mac",
+            "path": "name"
+          },
+          "text": {
+            "query": ""
+          }
+        }
+      },
+      {
+        $limit: 5
+      },
+      {
+        $project: {
+          "_id": 0,
+          "name": 1,
+          "brand": 1,
+          "description": 1
+        }
+      }
+    ])
+    res.json(data);
+  } catch(err) {
+    console.log(err);
+    res.status(404).json({ error: err });
+  }
+}
+
 module.exports = {
   uploadProduct,
   getProducts,
-  getProduct
+  getProduct,
+  searchProducts
 }
