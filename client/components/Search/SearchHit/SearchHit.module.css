@@ -1,0 +1,17 @@
+.hit {
+  padding: .5rem;
+  display: flex;
+}
+
+.image {
+  margin-right: 1rem;
+}
+
+.details .name {
+  font-weight: 600;
+}
+
+.details .price {
+  color: #EB5125;
+  font-weight: 600;
+}

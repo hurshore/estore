@@ -43,3 +43,34 @@ ul {
 #payment-request-button {
   margin-bottom: 32px;
 }
+
+.ais-SearchBox-form {
+  position: relative;
+}
+
+.ais-SearchBox-input {
+  z-index: 1;
+  background-color: #F4F5F7;
+  width: 100%;
+  padding: 1.2rem 3.5rem 1.2rem 3rem;
+  border: none;
+  font-size: 1.1rem;
+}
+
+.ais-SearchBox-submit {
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: 17px;
+  left: 14px;
+  z-index: 1;
+}
+
+.ais-SearchBox-submitIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ais-SearchBox-reset {
+  display: none;
+}

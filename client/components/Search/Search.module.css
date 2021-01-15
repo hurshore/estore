@@ -1,0 +1,40 @@
+.searchDialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: #FFF;
+  overflow-y: auto;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.cancel {
+  color: #EB5125;
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  font-size: .8rem;
+  transform: translateY(-50%);
+  background-color: #F4F5F7;
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  .searchDialog {
+    max-width: 992px;
+    left: 50%;
+    top: 50%;
+    height: 80vh;
+    transform: translate(-50%, -50%);
+  }
+}

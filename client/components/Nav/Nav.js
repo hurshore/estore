@@ -1,6 +1,7 @@
 import classes from './Nav.module.css';
 // Components
 import Badge from '../UI/Badge/Badge';
+import Search from '../Search/Search';
 // Nextjs stuff
 import ActiveLink from './ActiveLink';
 import Link from 'next/link';
@@ -47,9 +48,10 @@ const nav = () => {
       </ul>
       <div className={classes.shortcut}>
         <div>
-          <Image src="/search.svg" alt="search" width={20} height={20} />
+          {/* <Image src="/search.svg" alt="search" width={20} height={20} /> */}
+          <Search />
         </div>
-        <div>
+        <div className={classes.cart}>
           <Link href="/cart">
             <a>
               <Badge badgeContent={cartState.quantity}>
