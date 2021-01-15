@@ -29,7 +29,7 @@ const search = () => {
                 placeholder: 'Search for any product...'
               }}
             />
-            <p className={classes.cancel}>CANCEL</p>
+            <p className={classes.cancel} onClick={closeDialog}>CANCEL</p>
             <Hits hitComponent={SearchHit} />
           </div>
         </>
