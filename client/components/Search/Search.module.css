@@ -1,3 +1,7 @@
+.searchIcon {
+  cursor: pointer;
+}
+
 .searchDialog {
   position: fixed;
   top: 0;

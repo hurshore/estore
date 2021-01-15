@@ -2,14 +2,15 @@ import classes from './SearchHit.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const Hit = ({ hit }) => {
+const Hit = ({ hit, clicked }) => {
   const router = useRouter();
-  const clicked = (id) => {
+  const redirectToProduct = (id) => {
     router.push(`/shop/product/${id}`);
+    clicked();
   }
-  
+
   return (
-    <div className={classes.hit} onClick={() => clicked(hit.objectID)}>
+    <div className={classes.hit} onClick={() => redirectToProduct(hit.objectID)}>
       <div className={classes.image}>
         <Image src={hit.img} alt="product" width={40} height={40} />
       </div>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { SearchBox, Hits } from 'react-instantsearch-dom';
-import SearchHit from './SearchHit/SearchHit';
+import { SearchBox } from 'react-instantsearch-dom';
 import classes from './Search.module.css';
+import SearchHits from './SearchHits/SearchHits';
 
 const search = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -17,7 +17,7 @@ const search = () => {
 
   return (
     <div>
-      <div onClick={openDialog}>
+      <div className={classes.searchIcon} onClick={openDialog}>
         <Image src="/search.svg" alt="search" width={20} height={20} />
       </div>
       {showDialog && (
@@ -30,7 +30,8 @@ const search = () => {
               }}
             />
             <p className={classes.cancel} onClick={closeDialog}>CANCEL</p>
-            <Hits hitComponent={SearchHit} />
+            {/* <Hits hitComponent={SearchHit} /> */}
+            <SearchHits clicked={closeDialog} />
           </div>
         </>
       )}
