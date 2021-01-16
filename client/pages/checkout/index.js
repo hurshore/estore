@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../components/Checkout/CheckoutForm";
@@ -7,6 +8,11 @@ const promise = loadStripe("pk_test_51I5YXiJgUlScySzFTK5HgWxnx8tq6ldtkL8bfXo6Bjd
 const checkout = () => {
   return (
     <div>
+      <Head>
+        <title>Stello | Checkout</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Elements stripe={promise}>
         <CheckoutForm />
       </Elements>

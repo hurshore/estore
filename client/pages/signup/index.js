@@ -4,6 +4,7 @@ import Button from '../../components/UI/Button/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Head from 'next/head';
 
 const signup = () => {
   const [state, setState] = useState({
@@ -63,6 +64,11 @@ const signup = () => {
 
   return (
     <div className={classes.signup}>
+      <Head>
+        <title>Stello | Sign up</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className={classes.container}>
         <h2 className={classes.header}>Signup</h2>
         {

@@ -2,10 +2,16 @@ import classes from './shop.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '../../components/UI/Button/Button';
+import Head from 'next/head';
 
 const shop = ({ products }) => {
   return (
     <div className={classes.shop}>
+      <Head>
+        <title>Stello | Shop</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <h2 className={classes.header}>Products</h2>
       <div className={classes.products}>
         {

@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { useAuth, useDispatchAuth } from '../../context/authContext';
 import * as actionTypes from '../../context/actionTypes';
+import Head from 'next/head';
 
 const login = () => {
   const [state, setState] = useState({
@@ -64,6 +65,11 @@ const login = () => {
 
   return (
     <div className={classes.login}>
+      <Head>
+        <title>Stello | Log in</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className={classes.container}>
         <h2 className={classes.header}>Login</h2>
         {

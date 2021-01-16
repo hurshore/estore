@@ -5,6 +5,7 @@ import Button from '../../../components/UI/Button/Button';
 import { useAuth } from '../../../context/authContext';
 import { useDispatchCart } from '../../../context/cartContext';
 import * as actionTypes from '../../../context/actionTypes';
+import Head from 'next/head';
 
 const product = ({ product }) => {
   const [productQuantity, setProductQuantity] = useState(1);
@@ -68,6 +69,11 @@ const product = ({ product }) => {
 
   return (
     <div className={classes.product}>
+      <Head>
+        <title>Stello | Product</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className={classes.productImage}>
         <Image src={product.img} alt="product" width={300} height={300} />
       </div>

@@ -4,12 +4,18 @@ import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import Product from '../../components/Product/Product';
 import Button from '../../components/UI/Button/Button';
 import Link from 'next/link';
+import Head from 'next/head';
 
 const cart = () => {
   const cartState = useCart();
 
   return (
     <div className={classes.cart}>
+      <Head>
+        <title>Stello | Cart</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className={classes.container}>
         <h2>Shopping Cart ({cartState.quantity})</h2>
         <div className={classes.row}>
