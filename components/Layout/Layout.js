@@ -23,11 +23,9 @@ const layout = (props) => {
 
   useEffect(async () => {
     if(token) {
-      console.log('Token found');
       // Get user's cart
       const cart = JSON.parse(localStorage.getItem('cart'));
       if(cart) {
-        console.log('Cart in LS', cart);
         // Add cart in local storage to the db
         try {
           const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart/batch', {
@@ -62,7 +60,6 @@ const layout = (props) => {
   }, [token])
 
   const fetchCart = async () => {
-    console.log('Fetching cart');
     const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart', {
       headers: {
         'auth-token': token,
@@ -70,7 +67,6 @@ const layout = (props) => {
       }
     });
     const data = await res.json();
-    console.log(data);
 
     dispatchCart({
       type: actionTypes.SET_CART,

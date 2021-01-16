@@ -107,7 +107,6 @@ const checkoutForm = () => {
           }
         });
         const data = await res.json();
-        console.log(data);
         dispatchCart({
           type: actionTypes.RESET_CART
         })

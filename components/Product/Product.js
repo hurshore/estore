@@ -24,7 +24,6 @@ const product = ({ product }) => {
           body: JSON.stringify({ productId: product._id })
         })
         const data = await res.json();
-        console.log(data);
       } catch(err) {
         console.log(err);
       }
@@ -38,7 +37,6 @@ const product = ({ product }) => {
   }
 
   const incrementQuantity = async () => {
-    console.log('Adding product to database');
     const productToAdd = {
       productId: product._id,
       productName: product.name,
@@ -62,7 +60,6 @@ const product = ({ product }) => {
           throw res.clone.json();
         }
         const data = await res.json();
-        console.log(data);
       } catch(err) {
         console.log(err);
       }
@@ -79,7 +76,6 @@ const product = ({ product }) => {
   }
 
   const decrementQuantity = async () => {
-    console.log('Deleting product from database');
     const productToDelete = {
       productId: product._id,
       quantity: prevProductQuantity - productQuantity
@@ -96,7 +92,6 @@ const product = ({ product }) => {
           body: JSON.stringify(productToDelete)
         })
         const data = await res.json();
-        console.log(data);
       } catch(err) {
         console.log(err);
       }

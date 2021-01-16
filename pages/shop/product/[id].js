@@ -28,7 +28,6 @@ const product = ({ product }) => {
   }
 
   const addToCart = async () => {
-    console.log('Adding to cart');
     const productToAdd = {
       productId: product._id,
       productName: product.name,
@@ -37,8 +36,6 @@ const product = ({ product }) => {
       quantity: productQuantity,
       colors: product.colors
     }
-
-    console.log(product.colors);
 
     if(authState.token) {
       try {
@@ -51,7 +48,6 @@ const product = ({ product }) => {
           body: JSON.stringify(productToAdd),
         })
         const data = await res.json();
-        console.log(data);
       } catch(err) {
         console.log(err);
       }

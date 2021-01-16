@@ -14,7 +14,6 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_CART:
-      console.log(action.payload);
       return { 
         ...state, 
         products: action.payload.cart.products || [],
@@ -22,7 +21,6 @@ const reducer = (state, action) => {
         total: action.payload.cart.total || 0
       }
     case actionTypes.ADD_TO_CART:
-      console.log('Adding product to context');
       const index = state.products.findIndex(product => product._id === action.payload.product.productId);
       if(index > -1) {
         // Increase product quantity in cart
@@ -58,10 +56,8 @@ const reducer = (state, action) => {
         total: state.total + (action.payload.product.price * action.payload.product.quantity)
       }
     case actionTypes.DELETE_FROM_CART:
-      console.log(action.payload);
       let freshProducts;
       const productToDelete = state.products.find(product => product._id === action.payload.productId);
-      console.log(productToDelete);
       if(productToDelete.quantity < action.payload.quantity) throw new Error('Insufficent products');
       
       if(productToDelete.quantity === action.payload.quantity) {

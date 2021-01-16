@@ -53,7 +53,6 @@ const login = () => {
       }
 
       const data = await res.json();
-      console.log(data);
       dispatch({ type: actionTypes.SET_TOKEN, payload: data })
       setState({ ...state, loading: false, error: null });
       router.push(auth.authRedirectPath);

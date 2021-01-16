@@ -27,7 +27,6 @@ const signup = () => {
 
   const signupHandler = async (event) => {
     event.preventDefault();
-    console.log('Attemting signup');
     setState({ ...state, loading: true })
     const details = {
       name: state.fname,
@@ -52,7 +51,6 @@ const signup = () => {
       }
 
       const data = await res.json();
-      console.log(data);
       dispatch({ type: actionTypes.SET_TOKEN, payload: data });
       setState({ ...state, loading: false, error: null });
       router.push('/shop');
