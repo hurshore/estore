@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Head from 'next/head';
+import { useAuth, useDispatchAuth } from '../../context/authContext';
+import * as actionTypes from '../../context/actionTypes';
 
 const signup = () => {
   const [state, setState] = useState({
@@ -16,6 +18,8 @@ const signup = () => {
   })
 
   const router = useRouter();
+  const auth = useAuth();
+  const dispatch = useDispatchAuth();
 
   const inputChangeHandler = (event) => {
     setState({
@@ -53,7 +57,7 @@ const signup = () => {
       const data = await res.json();
       dispatch({ type: actionTypes.SET_TOKEN, payload: data });
       setState({ ...state, loading: false, error: null });
-      router.push('/shop');
+      router.push(auth.authRedirectPath);
     } catch(err) {
       console.log(err);
       setState({ ...state, loading: false, error: err.error });
