@@ -26,7 +26,7 @@ const checkoutForm = () => {
     // Create PaymentIntent as soon as the page loads
     if(!authState.token) return;
     window
-      .fetch("http://localhost:5000/api/payment/create-payment-intent", {
+      .fetch("https://nodejs-estore.herokuapp.com/api/payment/create-payment-intent", {
         headers: {
           "Content-Type": "application/json",
           'auth-token': localStorage.getItem('auth-token')
@@ -99,7 +99,7 @@ const checkoutForm = () => {
       setProcessing(false);
       setSucceeded(true);
       try {
-        const res = await fetch('http://localhost:5000/api/cart/all', {
+        const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart/all', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

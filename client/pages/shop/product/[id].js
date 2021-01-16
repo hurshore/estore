@@ -41,7 +41,7 @@ const product = ({ product }) => {
 
     if(authState.token) {
       try {
-        const res = await fetch('http://localhost:5000/api/cart', {
+        const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const product = ({ product }) => {
 }
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`http://localhost:5000/api/products`);
+  const res = await fetch(`https://nodejs-estore.herokuapp.com/api/products`);
   const products = await res.json();
 
   const paths = products.map(p => `/shop/product/${p._id}`);
@@ -126,7 +126,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const res = await fetch(`http://localhost:5000/api/products/${params.id}`);
+  const res = await fetch(`https://nodejs-estore.herokuapp.com/api/products/${params.id}`);
   const product = await res.json();
 
   return {

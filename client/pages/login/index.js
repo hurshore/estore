@@ -37,7 +37,7 @@ const login = () => {
 
     try {
       // Attempt log in
-      const res = await fetch('http://localhost:5000/api/user/login', {
+      const res = await fetch('https://nodejs-estore.herokuapp.com/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

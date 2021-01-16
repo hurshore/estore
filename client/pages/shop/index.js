@@ -30,7 +30,7 @@ const shop = ({ products }) => {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const res = await fetch(`http://localhost:5000/api/products`);
+  const res = await fetch(`https://nodejs-estore.herokuapp.com/api/products`);
   const products = await res.json();
 
   return {

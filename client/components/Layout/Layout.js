@@ -30,7 +30,7 @@ const layout = (props) => {
         console.log('Cart in LS', cart);
         // Add cart in local storage to the db
         try {
-          const res = await fetch('http://localhost:5000/api/cart/batch', {
+          const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart/batch', {
             method: 'POST',
             headers: {
               'auth-token': token,
@@ -63,7 +63,7 @@ const layout = (props) => {
 
   const fetchCart = async () => {
     console.log('Fetching cart');
-    const res = await fetch('http://localhost:5000/api/cart', {
+    const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart', {
       headers: {
         'auth-token': token,
         'Content-Type': 'application/json'

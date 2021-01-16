@@ -15,7 +15,7 @@ const product = ({ product }) => {
   const clearItem = async () => {
     if(token) {
       try {
-        const res = await fetch('http://localhost:5000/api/cart/clear', {
+        const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart/clear', {
           method: 'DELETE',
           headers: {
             'auth-token': token,
@@ -50,7 +50,7 @@ const product = ({ product }) => {
 
     if(token) {
       try {
-        const res = await fetch('http://localhost:5000/api/cart', {
+        const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const product = ({ product }) => {
     
     if(token) {
       try {
-        const res = await fetch('http://localhost:5000/api/cart', {
+        const res = await fetch('https://nodejs-estore.herokuapp.com/api/cart', {
           method: 'DELETE',
           headers: {
             'auth-token': token,
@@ -145,7 +145,7 @@ const product = ({ product }) => {
         <h4>{product.name}</h4>
         <p className={classes.productColor}>
           <span>Colors: </span>
-          {product.colors.map((color, index) => {
+          {product.colors && product.colors.map((color, index) => {
             if(index + 1 < product.colors.length) return (<span key={color}>{color}, </span>);
             return (<span key={color}>{color}</span>);
           })}
