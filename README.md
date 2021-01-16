@@ -1,4 +1,4 @@
 # Ecommerce Store with Next.js, Node.js, Stripe, and Algolia
 
 
-The demo site is coming soon.
+Demo site: [Stello](https://estore-client.vercel.app/)
