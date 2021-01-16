@@ -6,6 +6,7 @@ import SearchHits from './SearchHits/SearchHits';
 
 const search = () => {
   const [showDialog, setShowDialog] = useState(false);
+  const [showHits, setShowHits] = useState(false);
 
   const openDialog = () => {
     setShowDialog(true);
@@ -13,7 +14,16 @@ const search = () => {
 
   const closeDialog = () => {
     setShowDialog(false);
+    setShowHits(false);
   };
+
+  const inputChangeHandler = (event) => {
+    if(event.target.value.trim() !== '') {
+      setShowHits(true);
+    } else {
+      setShowHits(false);
+    }
+  }
 
   return (
     <div>
@@ -28,10 +38,10 @@ const search = () => {
               translations={{
                 placeholder: 'Search for any product...'
               }}
+              onChange={inputChangeHandler}
             />
             <p className={classes.cancel} onClick={closeDialog}>CANCEL</p>
-            {/* <Hits hitComponent={SearchHit} /> */}
-            <SearchHits clicked={closeDialog} />
+            {showHits && <SearchHits clicked={closeDialog} />}
           </div>
         </>
       )}
