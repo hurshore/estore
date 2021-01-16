@@ -53,7 +53,7 @@ const signup = () => {
 
       const data = await res.json();
       console.log(data);
-      localStorage.setItem('auth-token', data);
+      dispatch({ type: actionTypes.SET_TOKEN, payload: data });
       setState({ ...state, loading: false, error: null });
       router.push('/shop');
     } catch(err) {
