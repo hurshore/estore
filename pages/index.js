@@ -14,7 +14,7 @@ export default function Home() {
 
       <main className={classes.main}>
         <div className={classes.heroImg}>
-          <Image src="/iphone-12.png" alt="iPhone 12 mini" height={492} width={500} layout="intrinsic" />
+          <Image src="/iphone-12.png" alt="iPhone 12 mini" height={492} width={570} layout="intrinsic" />
         </div>
 
         <div className={classes.info}>
