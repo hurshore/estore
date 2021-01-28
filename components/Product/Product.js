@@ -134,7 +134,7 @@ const product = ({ product }) => {
   return (
     <div key={product._id} className={classes.productContainer}>
       <div className={classes.productImage}>
-        <Image src={product.img} alt="product" width={100} height={100} />
+        <Image src={product.img} alt="product" width={100} height={100} objectFit="contain" />
       </div>
       <div className={classes.productDetails}>
         <h4>{product.name}</h4>

@@ -36,6 +36,7 @@
 .signupForm .submitBtn {
   border-radius: .8rem;
   padding: .9rem;
+  width: 180px;
 }
 
 .login {

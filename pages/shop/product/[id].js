@@ -71,7 +71,7 @@ const product = ({ product }) => {
       </Head>
 
       <div className={classes.productImage}>
-        <Image src={product.img} alt="product" width={300} height={300} />
+        <Image src={product.img} alt="product" width={300} height={300} objectFit="contain" />
       </div>
 
       <div className={classes.productDetails}>

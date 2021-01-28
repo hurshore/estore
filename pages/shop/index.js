@@ -17,13 +17,13 @@ const shop = ({ products }) => {
         {
           products && products.map(product => (
             <div className={classes.product} key={product._id}>
-              <Image src={product.img} alt={product.name} width={300} height={300} layout="responsive" objectFit="contain" />
+              <Image src={product.img} alt={product.name} width={75} height={75} layout="responsive" objectFit="contain" />
               <div className={classes.productDetails}>
                 <p className={classes.productName}>{product.name}</p>
-                <h3 className={classes.productPrice}>{`$${product.price}`}</h3>
+                <h4 className={classes.productPrice}>{`$${product.price}`}</h4>
                 <Link href={`/shop/product/${product._id}`}>
                   <a>
-                    <Button>View Product</Button>
+                    <Button btnClassName={classes.viewBtn}>View</Button>
                   </a>
                 </Link>
               </div>
