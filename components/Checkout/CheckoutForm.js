@@ -15,7 +15,7 @@ const checkoutForm = () => {
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
   const [showTimer, setShowTimer] = useState(false);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(2);
   const stripe = useStripe();
   const elements = useElements();
   const cartState = useCart();
@@ -52,9 +52,7 @@ const checkoutForm = () => {
       }, 1000)
     }
 
-    return () => {
-      clearTimeout(timeout);
-    }
+    return () => clearTimeout(timeout);
   }, [showTimer, timer])
 
   const cardStyle = {
@@ -83,7 +81,6 @@ const checkoutForm = () => {
   };
 
   const handleSubmit = async ev => {
-    // Display redirect timer
     ev.preventDefault();
     setProcessing(true);
     const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -110,6 +107,7 @@ const checkoutForm = () => {
         dispatchCart({
           type: actionTypes.RESET_CART
         })
+        // Display redirect timer
         setShowTimer(true);
       } catch(err) {
         console.log(err);
@@ -119,7 +117,7 @@ const checkoutForm = () => {
 
   return (
     <div className={classes.checkoutForm}>
-      {showTimer && <Alert type="info">Redirecting in {timer}</Alert>}
+      <Alert open={showTimer} onClose={() => setShowTimer(false)} type="info">Redirecting in {timer}</Alert>
       <div className={classes.paymentDetails}>
         <h3>Please enter your payment details:</h3>
         <div className={classes.cards}>

@@ -1,9 +1,15 @@
 .alert {
+  position: fixed;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
   z-index: 1;
-  padding: 1rem 1rem;
+  padding: .5rem 1rem;
   margin-bottom: 1rem;
   border: 1px solid transparent;
-  border-radius: .25rem; 
+  border-radius: .25rem;
+  text-align: center;
 }
 
 .alertInfo {

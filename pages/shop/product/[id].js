@@ -2,6 +2,7 @@ import { useState } from 'react';
 import classes from './product.module.css';
 import Image from 'next/image';
 import Button from '../../../components/UI/Button/Button';
+import Alert from '../../../components/UI/Alert/Alert';
 import { useAuth } from '../../../context/authContext';
 import { useDispatchCart } from '../../../context/cartContext';
 import * as actionTypes from '../../../context/actionTypes';
@@ -9,6 +10,8 @@ import Head from 'next/head';
 
 const product = ({ product }) => {
   const [productQuantity, setProductQuantity] = useState(1);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const authState = useAuth();
   const dispatchCart = useDispatchCart();
   const productStars = Math.round(product.starrating);
@@ -58,9 +61,10 @@ const product = ({ product }) => {
       payload: {
         product: productToAdd,
         auth: authState.token ? true : false
-      },
-      
+      }
     });
+    setAlertMessage('Product added to cart');
+    setShowAlert(true);
   }
 
   return (
@@ -69,6 +73,8 @@ const product = ({ product }) => {
         <title>Stello | Product</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <Alert open={showAlert} onClose={() => setShowAlert(false)} type="info">{alertMessage}</Alert>
 
       <div className={classes.productImage}>
         <Image src={product.img} alt="product" width={300} height={300} objectFit="contain" />
