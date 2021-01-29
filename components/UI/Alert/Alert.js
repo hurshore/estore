@@ -7,7 +7,7 @@ const alert = (props) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       props.onClose()
-    }, 3000)
+    }, props.time || 3000)
     return () => clearTimeout(timeout);
   }, [props.open]);
 
@@ -16,6 +16,8 @@ const alert = (props) => {
       case 'info':
         setType(classes.alertInfo);
         break;
+      case 'success':
+        setType(classes.alertSuccess);
       default: break
     }
   }

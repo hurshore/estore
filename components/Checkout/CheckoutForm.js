@@ -15,7 +15,7 @@ const checkoutForm = () => {
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
   const [showTimer, setShowTimer] = useState(false);
-  const [timer, setTimer] = useState(2);
+  const [timer, setTimer] = useState(5);
   const stripe = useStripe();
   const elements = useElements();
   const cartState = useCart();
@@ -117,7 +117,7 @@ const checkoutForm = () => {
 
   return (
     <div className={classes.checkoutForm}>
-      <Alert open={showTimer} onClose={() => setShowTimer(false)} type="info">Redirecting in {timer}</Alert>
+      <Alert open={showTimer} onClose={() => setShowTimer(false)} type="info" time={6000}>Redirecting in {timer}</Alert>
       <div className={classes.paymentDetails}>
         <h3>Please enter your payment details:</h3>
         <div className={classes.cards}>

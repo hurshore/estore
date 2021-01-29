@@ -74,7 +74,7 @@ const product = ({ product }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Alert open={showAlert} onClose={() => setShowAlert(false)} type="info">{alertMessage}</Alert>
+      <Alert open={showAlert} onClose={() => setShowAlert(false)} type="success">{alertMessage}</Alert>
 
       <div className={classes.productImage}>
         <Image src={product.img} alt="product" width={300} height={300} objectFit="contain" />
